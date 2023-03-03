@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.storezaapdemo.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_stores"
+        android:name="com.example.storezaapdemo.ui.store.StoreFragment"
+        android:label="@string/menu_stores"
+        tools:layout="@layout/fragment_store" />
+
+    <fragment
+        android:id="@+id/nav_services"
+        android:name="com.example.storezaapdemo.ui.services.ServicesFragment"
+        android:label="@string/menu_services"
+        tools:layout="@layout/fragment_services" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.storezaapdemo.ui.news.NewsFragment"
+        android:label="@string/menu_news"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.storezaapdemo.ui.user.UserFragment"
+        android:label="@string/menu_user"
+        tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/logOut"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_user" />
+
+
+</navigation>
