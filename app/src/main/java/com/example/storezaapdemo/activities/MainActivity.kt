@@ -1,5 +1,6 @@
 package com.example.storezaapdemo.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.navigation.NavigationView
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.*
 import com.example.storezaapdemo.R
 import com.example.storezaapdemo.databinding.ActivityMainBinding
+import com.example.storezaapdemo.ui.home.HomeFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,7 +44,28 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         NavigationUI.setupWithNavController(binding.appBarMain.bottomNavigationView,navController)
 
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        val menu = navigationView.menu
+
+        val logoutMenuItem = menu.findItem(R.id.logout)
+        logoutMenuItem.setOnMenuItemClickListener { menuItem ->
+            // Clear user session
+            clearUserSession()
+
+            true
+        }
+
     }
+
+    private fun clearUserSession() {
+
+        // Redirect user to Home screen
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+
+        TODO("Not yet implemented")
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
