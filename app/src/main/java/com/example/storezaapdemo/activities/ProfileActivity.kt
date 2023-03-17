@@ -32,7 +32,7 @@ class ProfileActivity : AppCompatActivity() {
 
         sharedPrefManager = SharedPrefManager(this)
 
-        val userName = "Hey! " + sharedPrefManager.getUser().username
+        val userName = "Hey! " + sharedPrefManager.getUser()
         etname.text = userName
         etemail.text = sharedPrefManager.getUser().email
 
