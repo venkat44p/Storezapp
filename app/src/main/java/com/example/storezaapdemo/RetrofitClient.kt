@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient private constructor() {
 
-    private val BASE_URL = "http://192.168.1.236/StorezApp/"
+    private val BASE_URL = "http://192.168.102.90/StorezApp/"
     private val builder = OkHttpClient.Builder()
     private val interceptor = HttpLoggingInterceptor()
 
