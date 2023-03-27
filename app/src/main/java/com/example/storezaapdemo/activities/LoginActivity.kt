@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         if (userEmail.isEmpty()) {
             email.requestFocus()
-            email.error = "Please enter your name"
+            email.error = "Please enter your email"
             return
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
         if (userPassword.length < 8) {
             password.requestFocus()
-            password.error = "Please enter your name"
+            password.error = "Please enter your password"
             return
         }
 
