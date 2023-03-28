@@ -27,9 +27,9 @@ class ProfileFragment : Fragment() {
 
         sharedPrefManager = SharedPrefManager(requireActivity())
 
-        val userName = "Hey! " + sharedPrefManager.getUser().username
+        val userName = "Hey! " + (sharedPrefManager.getUser()?.username)
         etname.text = userName
-        etemail.text = sharedPrefManager.getUser().email
+        etemail.text = sharedPrefManager.getUser()?.email
 
         return view
     }

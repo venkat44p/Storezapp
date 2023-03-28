@@ -13,13 +13,15 @@ import android.widget.Toast
 import com.example.storezaapdemo.R
 import com.example.storezaapdemo.RetrofitClient
 import com.example.storezaapdemo.SharedPrefManager
+import com.example.storezaapdemo.model.User
 import com.example.storezaapdemo.ui.profile.ProfileFragment
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var email: EditText
     private lateinit var password: EditText
@@ -43,10 +45,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         email = findViewById(R.id.etemail)
         password = findViewById(R.id.etpassword)
         login = findViewById(R.id.btnlogin)
-        registerlink = findViewById(R.id.registerlink)
+        //registerlink = findViewById(R.id.registerlink)
 
-        registerlink.setOnClickListener(this)
-        login.setOnClickListener(this)
+        //registerlink.setOnClickListener(this)
+        //login.setOnClickListener(this)
 
         val signUpText = findViewById<TextView>(R.id.registerlink)
         signUpText.setOnClickListener {
@@ -55,18 +57,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         sharedPrefManager = SharedPrefManager(applicationContext)
-    }
 
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.btnlogin -> userLogin()
-            R.id.registerlink -> switchOnRegister()
+        login.setOnClickListener {
+            userLogin()
         }
+
+        switchOnRegister()
     }
 
     private fun userLogin() {
-        val userEmail = email.text.toString()
-        val userPassword = password.text.toString()
+        val userEmail = email.text.toString().trim()
+        val userPassword = password.text.toString().trim()
 
         if (userEmail.isEmpty()) {
             email.requestFocus()
@@ -94,13 +95,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val loginResponse = response.body()
-
                 if (response.isSuccessful) {
+                    val user = getUserFromResponse(response.body())
+                    sharedPrefManager.saveUser(user)
                     val intent = Intent(this@LoginActivity, ProfileActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    Toast.makeText(this@LoginActivity, loginResponse.toString(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Invalid email or password",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -108,6 +114,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun getUserFromResponse(response: ResponseBody?): User {
+        val userJson = response?.string()
+        return Gson().fromJson(userJson, User::class.java)
     }
 
     private fun switchOnRegister() {

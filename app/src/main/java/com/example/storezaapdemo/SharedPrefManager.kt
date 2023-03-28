@@ -24,13 +24,28 @@ class SharedPrefManager(private val context: Context) {
         return sharedPreferences!!.getBoolean("logged", false)
     }
 
-    fun getUser(): User {
-        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        return User(
-            sharedPreferences!!.getInt("id", -1),
-            sharedPreferences!!.getString("username", null),
-            sharedPreferences!!.getString("email", null)
-        )
+    fun getUser(): User? {
+        val id = sharedPreferences?.getInt("id", -1)
+        val username = sharedPreferences?.getString("username", null)
+        val email = sharedPreferences?.getString("email", null)
+        if (id == -1 || username == null || email == null) {
+            return null
+        }
+        return id?.let { User(it, username, email) }
+    }
+
+    fun removeUser() {
+        val editor = sharedPreferences?.edit()
+        if (editor != null) {
+            editor.remove("id")
+        }
+        if (editor != null) {
+            editor.remove("username")
+        }
+        if (editor != null) {
+            editor.remove("email")
+        }
+        editor?.apply()
     }
 
     fun logout() {
