@@ -18,7 +18,7 @@ interface Api {
     ): Call<ResponseBody>
 
     @FormUrlEncoded
-    @POST("loginold.php")
+    @POST("login.php")
     fun login(
         @Field("email") email: String,
         @Field("password") password: String

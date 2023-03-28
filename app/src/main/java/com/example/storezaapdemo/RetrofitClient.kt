@@ -12,20 +12,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient private constructor() {
 
-    private val BASE_URL = "http:// 192.168.174.90/StorezApp/"
-    private val builder = OkHttpClient.Builder()
-    private val interceptor = HttpLoggingInterceptor()
+   // private val BASE_URL = "http://192.168.174.90/StorezApp/"
+    //private val builder = OkHttpClient.Builder()
+   // private val interceptor = HttpLoggingInterceptor()
 
     init {
         val gson = GsonBuilder()
             .setLenient()
             .create()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        builder.addInterceptor(interceptor)
+        //interceptor.level = HttpLoggingInterceptor.Level.BODY
+        //builder.addInterceptor(interceptor)
 
         retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(builder.build())
+            .baseUrl("http://192.168.1.236/StorezApp/")
+            .client(OkHttpClient.Builder().build())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
